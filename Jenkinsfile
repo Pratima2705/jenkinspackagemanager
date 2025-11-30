@@ -1,15 +1,15 @@
-pipeline {
+pipeline {pipeline {
     agent any
 
     stages {
 
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Setup Python Env') {
+        stage('Setup Python Environment') {
             steps {
                 bat """
                     python -m venv venv
@@ -25,11 +25,12 @@ pipeline {
                     call venv\\Scripts\\activate
                     pip install --upgrade pip
                     pip install -r requirements.txt
+                    pip install setuptools wheel build
                 """
             }
         }
 
-        stage('Build Package (wheel + sdist)') {
+        stage('Build Package (Wheel & Sdist)') {
             steps {
                 bat """
                     call venv\\Scripts\\activate
@@ -38,18 +39,21 @@ pipeline {
             }
         }
 
-        stage('Archive Artifacts') {
+        stage('Archive Build Artifacts') {
             steps {
                 archiveArtifacts artifacts: 'dist/*', fingerprint: true
             }
         }
+
     }
 
     post {
         always {
             bat """
-                echo Build completed
+                echo Cleaning workspace...
             """
+            cleanWs()
         }
     }
 }
+
