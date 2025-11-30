@@ -1,2 +1,5 @@
-numpy 
+numpy
 pandas
+setuptools
+wheel
+build
