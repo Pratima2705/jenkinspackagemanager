@@ -21,9 +21,10 @@ pipeline {
         }
 
         stage('Build'){
+            steps{
          bat ''' python app.py'''
         }
-
+        }
         stage('Archive Build Artifacts') {
             steps {
                 archiveArtifacts artifacts: 'dist/*', fingerprint: true
@@ -40,4 +41,5 @@ pipeline {
         }
     }
 }
+
 
