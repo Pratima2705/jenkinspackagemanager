@@ -1,4 +1,4 @@
-pipeline {pipeline {
+pipeline {
     agent any
 
     stages {
@@ -44,7 +44,6 @@ pipeline {pipeline {
                 archiveArtifacts artifacts: 'dist/*', fingerprint: true
             }
         }
-
     }
 
     post {
@@ -56,4 +55,3 @@ pipeline {pipeline {
         }
     }
 }
-
